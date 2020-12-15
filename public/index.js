@@ -1,6 +1,7 @@
 var boxList = [];
 
 makeRow(16, "Sound 1");
+makeAudioPlayer("audio/bonk-3.wav");
 
 function makeRow(numBoxes, soundName) {
 	var i;
@@ -57,6 +58,28 @@ function createBoxObject() {
 }
 
 function boxClick(boxObject) {
-	console.log("CLICKED");
 	boxObject.toggle();
+}
+
+function makeAudioPlayer(soundSource) {
+	var audio = document.createElement("audio");
+	var audioSource = document.createElement("source");
+	audioSource.setAttribute("src", soundSource);
+	audio.appendChild(audioSource);
+	document.getElementById("audio-holder").appendChild(audio);
+
+	var audioPlayer = {
+		sound: audio,
+		loop:null,
+		play:function() {
+			this.loop = setInterval(function() {
+				audio.play();
+			}, 500);
+		},
+		clear:function() {
+			clearInterval(this.loop);
+		}
+	}
+
+	return audioPlayer;
 }
