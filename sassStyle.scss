@@ -1,1 +1,78 @@
-$var: 2px;
+$font: 'Ubuntu', sans-serif;
+$general-radius: 15px;
+$general-padding: 20px;
+
+$background: aquamarine;
+
+$color-primary-1: aquamarine;
+$color-primary-2: white;
+$color-primary-3: rgb(123, 202, 123);
+
+$color-secondary-1: grey;
+
+$box-size: 15px;
+$box-margin: 2px;
+
+body {
+	font-family: 'Ubuntu', sans-serif;
+}
+
+#background {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: -1;
+	background-color: $background;
+	
+	display:  flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#beat-container {
+	border-radius: $general-radius;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	background-color: $color-primary-2;
+	width: 70%;
+	height: 70%;
+	padding: $general-padding;
+}
+
+.boxes {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+	align-items: center;
+	width: 70%;
+	background-color: $color-secondary-1;
+	border-radius: $general-radius;
+	padding: $general-radius;
+}
+
+.row {
+	display: flex;
+	justify-content: space-around;
+	flex-direction: row;
+	align-items: center;
+	width: 100%;
+}
+
+.box {
+	width: $box-size;
+	height: $box-size;
+	border: 2px solid;
+	margin: $box-margin;
+}
+
+.off {
+	background-color: $color-primary-2;
+}
+
+.on {
+	background-color: $color-primary-3;
+}

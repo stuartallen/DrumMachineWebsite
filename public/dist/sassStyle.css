@@ -1,0 +1,62 @@
+body {
+  font-family: "Ubuntu", sans-serif;
+}
+
+#background {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+  background-color: aquamarine;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#beat-container {
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: white;
+  width: 70%;
+  height: 70%;
+  padding: 20px;
+}
+
+.boxes {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  width: 70%;
+  background-color: grey;
+  border-radius: 15px;
+  padding: 15px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+
+.box {
+  width: 15px;
+  height: 15px;
+  border: 2px solid;
+  margin: 2px;
+}
+
+.off {
+  background-color: white;
+}
+
+.on {
+  background-color: #7bca7b;
+}
