@@ -13,6 +13,8 @@ $color-secondary-1: grey;
 $box-size: 15px;
 $box-margin: 2px;
 
+$button-size: 50px;
+
 body {
 	font-family: 'Ubuntu', sans-serif;
 }
@@ -43,6 +45,22 @@ body {
 	padding: $general-padding;
 }
 
+#controls {
+	width: 90%;
+
+	background-color: $color-secondary-1;
+	border-radius: $general-radius;
+	
+	padding: $general-padding;
+}
+
+.button {
+	font-family: 'Ubuntu', sans-serif;
+	width: $button-size;
+	height: $button-size;
+	border-radius: 100%;
+}
+
 .boxes {
 	display: flex;
 	justify-content: space-between;
@@ -51,7 +69,7 @@ body {
 	width: 70%;
 	background-color: $color-secondary-1;
 	border-radius: $general-radius;
-	padding: $general-radius;
+	padding: $general-padding;
 }
 
 .row {
@@ -60,6 +78,7 @@ body {
 	flex-direction: row;
 	align-items: center;
 	width: 100%;
+	margin: $box-margin;
 }
 
 .box {

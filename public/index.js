@@ -1,8 +1,8 @@
 var boxList = [];
 var curSubBeat = 0;
 
-makeRow(16, "Sound 1");
-var audio = makeAudioPlayer("audio/bonk-3.wav", boxList);
+makeRow(16, "Snare");
+var audio = makeAudioPlayer("audio/212208__alexthegr81__tapesnare-15.wav", boxList);
 audio.playLoop();
 
 function makeRow(numBoxes, soundName) {
@@ -75,7 +75,7 @@ function makeAudioPlayer(soundSource) {
 		loop:null,
 		subBeatIndex: 0,
 		playLoop:function() {
-			this.loop = setInterval(this.play, 500);
+			this.loop = setInterval(this.play, 100);
 		},
 		play:function() {
 			if(boxList[curSubBeat].activated) {
