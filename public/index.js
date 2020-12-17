@@ -42,9 +42,7 @@ function generateAudioPlayer(sampleList, timeTable) {
 		beginLoop: function(audioPlayer) {
 			if(!audioPlayer.playing) {
 				audioPlayer.playing = true;
-				console.log(document.getElementById("bpm-input").value);
 				var subBeatLength = (60 * 1000) / (document.getElementById("bpm-input").value * 4);
-				console.log(subBeatLength);
 				audioPlayer.loop = setInterval(function() { audioPlayer.loopFunction(audioPlayer)} , subBeatLength);
 			}
 		},

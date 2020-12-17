@@ -42,11 +42,11 @@ body {
 	background-color: $color-primary-2;
 	width: 70%;
 	height: 70%;
-	padding: $general-padding;
+	padding: 3 * $general-padding;
 }
 
 #controls {
-	width: 90%;
+	width: 100%;
 
 	background-color: $color-secondary-1;
 	border-radius: $general-radius;
@@ -59,6 +59,11 @@ body {
 	width: $button-size;
 	height: $button-size;
 	border-radius: 100%;
+}
+
+#controls input {
+	font-family: 'Ubuntu', sans-serif;
+	width: 40px;
 }
 
 .boxes {
@@ -79,6 +84,7 @@ body {
 	align-items: center;
 	width: 100%;
 	margin: $box-margin;
+	
 }
 
 .box {
