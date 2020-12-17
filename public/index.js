@@ -1,13 +1,69 @@
-var boxList = [];
-var curSubBeat = 0;
+var audioSampleNames = [
+	"kick.wav",
+	"snare.wav"
+];
 
-makeRow(16, "Snare");
-var audio = makeAudioPlayer("audio/212208__alexthegr81__tapesnare-15.wav", boxList);
-audio.playLoop();
+audioSetUp();
 
-function makeRow(numBoxes, soundName) {
-	var i;
+function audioSetUp() {
+	var timeTable = [];	
+	var i = 0;
+	for(sample of audioSampleNames) {
+		makeRow(timeTable, 16, sample, i);
+		i++;
+	}
+	var sampleList = generateAudioSamples(audioSampleNames);
+	var audioPlayer = generateAudioPlayer(sampleList, timeTable);
+	document.getElementById("play-button").addEventListener("click", function() { audioPlayer.beginLoop(audioPlayer) });
+	document.getElementById("pause-button").addEventListener("click", function() { audioPlayer.pause(audioPlayer) });
+	document.getElementById("stop-button").addEventListener("click", function() { audioPlayer.stop(audioPlayer) });
+}
 
+function generateAudioSamples(audioSampleNames) {
+	var sampleList = [];
+	for(sound of audioSampleNames) {
+		var audio = document.createElement("audio");
+		var audioSource = document.createElement("source");
+		audioSource.setAttribute("src", "audio/" + sound);
+		audio.appendChild(audioSource);
+		document.getElementById("audio-holder").appendChild(audio);
+		sampleList.push(audio);
+	}
+	return sampleList;
+}
+
+function generateAudioPlayer(sampleList, timeTable) {
+	var audioPlayer = {
+		samples:sampleList,
+		table:timeTable,
+		currentSubBeat:0,
+		loop:null,
+		beginLoop: function(audioPlayer) {
+			audioPlayer.loop = setInterval(function() { audioPlayer.loopFunction(audioPlayer)} , 100);
+		},
+		loopFunction: function(audioPlayer) {
+			var i;		
+			
+			for(i = 0; i < audioPlayer.table.length; i++) {
+				if(audioPlayer.table[i][audioPlayer.currentSubBeat]) {
+					audioPlayer.samples[i].currentTime = 0;
+					audioPlayer.samples[i].play();
+				}
+			}
+			audioPlayer.currentSubBeat = (this.currentSubBeat + 1) % 16;
+		},
+		pause: function(audioPlayer) {
+			clearInterval(audioPlayer.loop)
+		},
+		stop: function(audioPlayer) {
+			clearInterval(audioPlayer.loop);
+			audioPlayer.currentSubBeat = 0;
+		}
+	};
+	return audioPlayer;
+}
+
+function makeRow(timeTable, numBoxes, soundName, rowNumber) {
 	var row = document.createElement("div");
 	row.setAttribute("class","row")
 
@@ -18,22 +74,28 @@ function makeRow(numBoxes, soundName) {
 	var boxes = document.createElement("div");
 	boxes.setAttribute("class","boxes");
 
+	var i;
+	var innerTimeTable = [];
 	for(i = 0; i < numBoxes; i++) {
-		var newBox = createBoxObject();
+		var newBox = createBoxObject(timeTable, rowNumber, i);
 		boxes.appendChild(newBox.DOMElement);
-		boxList.push(newBox);
+		innerTimeTable.push(newBox.activated);
 	}
+	timeTable.push(innerTimeTable);
 
 	row.appendChild(boxes);
 
 	document.getElementById("beat-container").appendChild(row);
 }
 
-function createBoxObject() {
+function createBoxObject(timeTable, rowNumber, columnNumber) {
 	var box = document.createElement("div");
 	box.setAttribute("class","box off");
 
 	var boxObject = {
+		table:timeTable,
+		row:rowNumber,
+		col:columnNumber,
 		DOMElement:box,
 		activated:false,
 		turnOff:function() {
@@ -61,8 +123,10 @@ function createBoxObject() {
 
 function boxClick(boxObject) {
 	boxObject.toggle();
+	boxObject.table[boxObject.row][boxObject.col] = boxObject.activated;
 }
 
+/*
 function makeAudioPlayer(soundSource) {
 	var audio = document.createElement("audio");
 	var audioSource = document.createElement("source");
@@ -90,3 +154,4 @@ function makeAudioPlayer(soundSource) {
 
 	return audioPlayer;
 }
+*/
