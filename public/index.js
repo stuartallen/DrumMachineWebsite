@@ -38,8 +38,15 @@ function generateAudioPlayer(sampleList, timeTable) {
 		table:timeTable,
 		currentSubBeat:0,
 		loop:null,
+		playing:false,
 		beginLoop: function(audioPlayer) {
-			audioPlayer.loop = setInterval(function() { audioPlayer.loopFunction(audioPlayer)} , 100);
+			if(!audioPlayer.playing) {
+				audioPlayer.playing = true;
+				console.log(document.getElementById("bpm-input").value);
+				var subBeatLength = (60 * 1000) / (document.getElementById("bpm-input").value * 4);
+				console.log(subBeatLength);
+				audioPlayer.loop = setInterval(function() { audioPlayer.loopFunction(audioPlayer)} , subBeatLength);
+			}
 		},
 		loopFunction: function(audioPlayer) {
 			var i;		
@@ -53,10 +60,11 @@ function generateAudioPlayer(sampleList, timeTable) {
 			audioPlayer.currentSubBeat = (this.currentSubBeat + 1) % 16;
 		},
 		pause: function(audioPlayer) {
+			audioPlayer.playing = false
 			clearInterval(audioPlayer.loop)
 		},
 		stop: function(audioPlayer) {
-			clearInterval(audioPlayer.loop);
+			audioPlayer.pause(audioPlayer);
 			audioPlayer.currentSubBeat = 0;
 		}
 	};
