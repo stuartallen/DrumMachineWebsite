@@ -1,9 +1,8 @@
 var audioSampleNames = [
 	"kick.wav",
-	"snare.wav"
+	"snare.wav",
+	"closed_hh.wav"
 ];
-
-audioSetUp();
 
 function audioSetUp() {
 	var timeTable = [];	
@@ -54,8 +53,17 @@ function generateAudioPlayer(sampleList, timeTable) {
 					audioPlayer.samples[i].currentTime = 0;
 					audioPlayer.samples[i].play();
 				}
+				var id = i + "-" + this.currentSubBeat;
+				var last_id = i + "-" + ((this.currentSubBeat + 15) % 16);
+				document.getElementById(id).classList.add("playing");
+
+				var last_box = document.getElementById(last_id);
+				if(last_box.classList.contains("playing")) {
+					document.getElementById(last_id).classList.remove("playing");
+				}
 			}
-			audioPlayer.currentSubBeat = (this.currentSubBeat + 1) % 16;
+			audioPlayer.currentSubBeat = (this.currentSubBeat + 1) % audioPlayer.table[0].length;
+			
 		},
 		pause: function(audioPlayer) {
 			audioPlayer.playing = false
@@ -84,6 +92,8 @@ function makeRow(timeTable, numBoxes, soundName, rowNumber) {
 	var innerTimeTable = [];
 	for(i = 0; i < numBoxes; i++) {
 		var newBox = createBoxObject(timeTable, rowNumber, i);
+		var id = rowNumber + "-" + i;
+		newBox.DOMElement.setAttribute("id", id);
 		boxes.appendChild(newBox.DOMElement);
 		innerTimeTable.push(newBox.activated);
 	}
@@ -132,32 +142,6 @@ function boxClick(boxObject) {
 	boxObject.table[boxObject.row][boxObject.col] = boxObject.activated;
 }
 
-/*
-function makeAudioPlayer(soundSource) {
-	var audio = document.createElement("audio");
-	var audioSource = document.createElement("source");
-	audioSource.setAttribute("src", soundSource);
-	audio.appendChild(audioSource);
-	document.getElementById("audio-holder").appendChild(audio);
+/*	Shit happens */
 
-	var audioPlayer = {
-		sound: audio,
-		loop:null,
-		subBeatIndex: 0,
-		playLoop:function() {
-			this.loop = setInterval(this.play, 100);
-		},
-		play:function() {
-			if(boxList[curSubBeat].activated) {
-				audio.play();
-			}
-			curSubBeat = (curSubBeat + 1) % 16
-		},
-		clear:function() {
-			clearInterval(this.loop);
-		}
-	}
-
-	return audioPlayer;
-}
-*/
+audioSetUp();

@@ -9,6 +9,7 @@ $color-primary-2: white;
 $color-primary-3: rgb(123, 202, 123);
 
 $color-secondary-1: grey;
+$color-secondary-2: red;
 
 $box-size: 15px;
 $box-margin: 2px;
@@ -16,7 +17,7 @@ $box-margin: 2px;
 $button-size: 50px;
 
 body {
-	font-family: 'Ubuntu', sans-serif;
+	font-family: $font;
 }
 
 #background {
@@ -55,14 +56,19 @@ body {
 }
 
 .button {
-	font-family: 'Ubuntu', sans-serif;
+	font-family: $font;
 	width: $button-size;
 	height: $button-size;
 	border-radius: 100%;
 }
 
 #controls input {
-	font-family: 'Ubuntu', sans-serif;
+	font-family: $font;
+	width: 40px;
+}
+
+#controls select {
+	font-family: $font;
 	width: 40px;
 }
 
@@ -100,4 +106,8 @@ body {
 
 .on {
 	background-color: $color-primary-3;
+}
+
+.playing {
+	border-color: $color-secondary-2;
 }

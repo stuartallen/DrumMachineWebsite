@@ -14,12 +14,28 @@
 	<div id="background">
 		<div id="beat-container">
 			<div id="controls" class="row">
-				<button id="play-button" class="button">|&gt</button>
-				<button id="pause-button" class="button">||</button>
-				<button id="stop-button" class="button">[]</button>
+				<button id="play-button" class="button">
+					<svg class="bi" width="32" height="32" fill="black">
+						<use href="bootstrap-icons.svg#play"/>
+					</svg>
+				</button>
+				<button id="pause-button" class="button">
+					<svg class="bi" width="32" height="32" fill="black">
+						<use href="bootstrap-icons.svg#pause"/>
+					</svg></button>
+				<button id="stop-button" class="button">
+					<svg class="bi" width="32" height="32" fill="black">
+						<use href="bootstrap-icons.svg#stop"/>
+					</svg></button>
 				<input id="bpm-input" type="number" value="100">
 				<input id="numerator-input" type="number" value="4">
-				<input id="denominator-input" type="number" value="4">
+				<select id="denominator-input">
+					<option value="2">2</option>
+					<option value="4" selected="selected">4</option>
+					<option value="8">8</option>
+					<option value="16">16</option>
+					<option value="32">32</option>
+				</select>
 			</div>
 		</div>
 	</div>

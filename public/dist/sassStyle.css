@@ -46,6 +46,11 @@ body {
   width: 40px;
 }
 
+#controls select {
+  font-family: "Ubuntu", sans-serif;
+  width: 40px;
+}
+
 .boxes {
   display: flex;
   justify-content: space-between;
@@ -79,4 +84,8 @@ body {
 
 .on {
   background-color: #7bca7b;
+}
+
+.playing {
+  border-color: red;
 }
