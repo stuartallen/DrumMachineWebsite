@@ -59,7 +59,7 @@ function generateAudioPlayer(sampleList, timeTable) {
 
 				var last_box = document.getElementById(last_id);
 				if(last_box.classList.contains("playing")) {
-					document.getElementById(last_id).classList.remove("playing");
+					last_box.classList.remove("playing");
 				}
 			}
 			audioPlayer.currentSubBeat = (this.currentSubBeat + 1) % audioPlayer.table[0].length;
@@ -71,6 +71,16 @@ function generateAudioPlayer(sampleList, timeTable) {
 		},
 		stop: function(audioPlayer) {
 			audioPlayer.pause(audioPlayer);
+			var i;
+			for(i = 0; i < audioPlayer.table.length; i++) {
+				/*	The -1 is because the sub beat is incremented as the last thing in the loop	*/
+				var id = i + "-" + (this.currentSubBeat - 1);
+				var box = document.getElementById(id);
+				console.log(id);
+				if(box.classList.contains("playing")) {
+					box.classList.remove("playing");
+				}
+			}
 			audioPlayer.currentSubBeat = 0;
 		}
 	};
