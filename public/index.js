@@ -3,7 +3,6 @@ var audioSampleNames = [
 	"snare.wav",
 	"closed_hh.wav"
 ];
-var i = 0;
 
 function audioSetUp() {
 	var timeTable = [];	
@@ -17,6 +16,15 @@ function audioSetUp() {
 	document.getElementById("play-button").addEventListener("click", function() { audioPlayer.beginLoop(audioPlayer) });
 	document.getElementById("pause-button").addEventListener("click", function() { audioPlayer.pause(audioPlayer) });
 	document.getElementById("stop-button").addEventListener("click", function() { audioPlayer.stop(audioPlayer) });
+	$("#numerator-input").change(function() { updateTimeSignature(audioPlayer) });
+	$("#denominator-input").change(function() { updateTimeSignature(audioPlayer) });
+	$("#bpm-input").change(function() { audioPlayer.updateSubBeatLength(audioPlayer) });
+}
+
+function updateTimeSignature(audioPlayer) {
+	window.alert("HERE");
+	audioPlayer.stop();
+
 }
 
 function generateAudioSamples(audioSampleNames) {
@@ -42,6 +50,7 @@ function generateAudioPlayer(sampleList, timeTable) {
 		playing:false,
 		subBeatLength: null,
 		updateSubBeatLength: function(audioPlayer) {
+			console.log("updated");
 			var bpm = document.getElementById("bpm-input").value;
 			var denominator = document.getElementById("denominator-input").value;
 			/*	bdr = beats denominator represents */
@@ -56,11 +65,7 @@ function generateAudioPlayer(sampleList, timeTable) {
 			}
 		},
 		loopFunction: function(audioPlayer) {
-			i += 1;
-			console.log(i);
-			audioPlayer.updateSubBeatLength(audioPlayer);
 			if(audioPlayer.playing) {
-				audioPlayer.updateSubBeatLength(audioPlayer);
 
 				var i;		
 				for(i = 0; i < audioPlayer.table.length; i++) {
