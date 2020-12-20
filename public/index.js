@@ -38,32 +38,44 @@ function generateAudioPlayer(sampleList, timeTable) {
 		currentSubBeat:0,
 		loop:null,
 		playing:false,
+		subBeatLength: (60 * 1000) / (document.getElementById("bpm-input").value * 8),
+		updateSubBeatLength: function(audioPlayer) {
+			audioPlayer.subBeatLength = (60 * 1000) / (document.getElementById("bpm-input").value * 8);
+		},
 		beginLoop: function(audioPlayer) {
 			if(!audioPlayer.playing) {
 				audioPlayer.playing = true;
-				var subBeatLength = (60 * 1000) / (document.getElementById("bpm-input").value * 4);
-				audioPlayer.loop = setInterval(function() { audioPlayer.loopFunction(audioPlayer)} , subBeatLength);
+				audioPlayer.updateSubBeatLength(audioPlayer);
+				audioPlayer.loopFunction(audioPlayer);
 			}
 		},
 		loopFunction: function(audioPlayer) {
-			var i;		
-			
-			for(i = 0; i < audioPlayer.table.length; i++) {
-				if(audioPlayer.table[i][audioPlayer.currentSubBeat]) {
-					audioPlayer.samples[i].currentTime = 0;
-					audioPlayer.samples[i].play();
-				}
-				var id = i + "-" + this.currentSubBeat;
-				var last_id = i + "-" + ((this.currentSubBeat + 15) % 16);
-				document.getElementById(id).classList.add("playing");
+			audioPlayer.updateSubBeatLength(audioPlayer);
+			setTimeout(function() {
+				if(audioPlayer.playing) {
+					audioPlayer.updateSubBeatLength(audioPlayer);
 
-				var last_box = document.getElementById(last_id);
-				if(last_box.classList.contains("playing")) {
-					last_box.classList.remove("playing");
+					var i;		
+					for(i = 0; i < audioPlayer.table.length; i++) {
+						if(audioPlayer.table[i][audioPlayer.currentSubBeat]) {
+							audioPlayer.samples[i].currentTime = 0;
+							audioPlayer.samples[i].play();
+						}
+						var id = i + "-" + audioPlayer.currentSubBeat;
+						var last_id = i + "-" + ((audioPlayer.currentSubBeat + 15) % 16);
+						console.log(id);
+						document.getElementById(id).classList.add("playing");
+
+						var last_box = document.getElementById(last_id);
+						if(last_box.classList.contains("playing")) {
+							last_box.classList.remove("playing");
+						}
+					}
+					audioPlayer.currentSubBeat = (audioPlayer.currentSubBeat + 1) % audioPlayer.table[0].length;
+
+					setTimeout(function() {audioPlayer.loopFunction(audioPlayer)}, audioPlayer.subBeatLength);
 				}
-			}
-			audioPlayer.currentSubBeat = (this.currentSubBeat + 1) % audioPlayer.table[0].length;
-			
+			}, audioPlayer.subBeatLength);
 		},
 		pause: function(audioPlayer) {
 			audioPlayer.playing = false
@@ -74,9 +86,8 @@ function generateAudioPlayer(sampleList, timeTable) {
 			var i;
 			for(i = 0; i < audioPlayer.table.length; i++) {
 				/*	The -1 is because the sub beat is incremented as the last thing in the loop	*/
-				var id = i + "-" + (this.currentSubBeat - 1);
+				var id = i + "-" + ((this.currentSubBeat + 15) % 16);
 				var box = document.getElementById(id);
-				console.log(id);
 				if(box.classList.contains("playing")) {
 					box.classList.remove("playing");
 				}
@@ -155,3 +166,15 @@ function boxClick(boxObject) {
 /*	Shit happens */
 
 audioSetUp();
+
+/*
+var i = 100;
+
+function incI() {
+	console.log(i);
+	i += 100;
+	setTimeout(incI, i);
+}
+
+var timer = setTimeout(incI, i)
+*/
