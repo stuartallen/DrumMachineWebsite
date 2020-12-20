@@ -22,9 +22,32 @@ function audioSetUp() {
 }
 
 function updateTimeSignature(audioPlayer) {
-	window.alert("HERE");
-	audioPlayer.stop();
+	if(audioPlayer.playing) {
+		audioPlayer.stop(audioPlayer);
+	}
+	audioPlayer.timeTable = []
 
+	var childList = document.getElementsByClassName("row");
+	console.log(childList);
+	while(childList[1]) {
+		childList[1].remove();
+	}
+
+	var numerator = document.getElementById("numerator-input").value;
+	var subdivisions = denominatorToSubdivisions(document.getElementById("denominator-input").value);
+	var i = 0;
+	for(sample of audioSampleNames) {
+		makeRow(audioPlayer.timeTable, numerator * subdivisions, sample, i);
+		i++;
+	}
+}
+
+function denominatorToSubdivisions(denominator) {
+	if(denominator <= 4) {
+		return 4;
+	} else {
+		return 2;
+	}
 }
 
 function generateAudioSamples(audioSampleNames) {
@@ -74,7 +97,7 @@ function generateAudioPlayer(sampleList, timeTable) {
 						audioPlayer.samples[i].play();
 					}
 					var id = i + "-" + audioPlayer.currentSubBeat;
-					var last_id = i + "-" + ((audioPlayer.currentSubBeat + 15) % 16);
+					var last_id = i + "-" + ((audioPlayer.currentSubBeat + audioPlayer.timeTable.length - 1) % audioPlayer.timeTable.length);
 					document.getElementById(id).classList.add("playing");
 
 					var last_box = document.getElementById(last_id);
@@ -96,7 +119,7 @@ function generateAudioPlayer(sampleList, timeTable) {
 			var i;
 			for(i = 0; i < audioPlayer.table.length; i++) {
 				/*	The -1 is because the sub beat is incremented as the last thing in the loop	*/
-				var id = i + "-" + ((this.currentSubBeat + 15) % 16);
+				var id = i + "-" + ((this.currentSubBeat + audioPlayer.timeTable.length - 1) % audioPlayer.timeTable.length);
 				var box = document.getElementById(id);
 				if(box.classList.contains("playing")) {
 					box.classList.remove("playing");
