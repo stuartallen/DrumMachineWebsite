@@ -63,7 +63,6 @@ function generateAudioPlayer(sampleList, timeTable) {
 						}
 						var id = i + "-" + audioPlayer.currentSubBeat;
 						var last_id = i + "-" + ((audioPlayer.currentSubBeat + 15) % 16);
-						console.log(id);
 						document.getElementById(id).classList.add("playing");
 
 						var last_box = document.getElementById(last_id);
