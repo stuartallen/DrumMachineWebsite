@@ -14,6 +14,7 @@ $color-secondary-2: red;
 $box-size: 15px;
 $box-margin: 2px;
 
+$controls-border: 1px solid;
 $button-size: 50px;
 
 body {
@@ -60,16 +61,19 @@ body {
 	width: $button-size;
 	height: $button-size;
 	border-radius: 100%;
+	border: $controls-border;
 }
 
 #controls input {
 	font-family: $font;
 	width: 40px;
+	border: $controls-border;
 }
 
 #controls select {
 	font-family: $font;
 	width: 40px;
+	border: $controls-border;
 }
 
 .boxes {
@@ -98,6 +102,10 @@ body {
 	height: $box-size;
 	border: 2px solid;
 	margin: $box-margin;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .off {

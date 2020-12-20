@@ -3,6 +3,7 @@ var audioSampleNames = [
 	"snare.wav",
 	"closed_hh.wav"
 ];
+var i = 0;
 
 function audioSetUp() {
 	var timeTable = [];	
@@ -31,6 +32,7 @@ function generateAudioSamples(audioSampleNames) {
 	return sampleList;
 }
 
+
 function generateAudioPlayer(sampleList, timeTable) {
 	var audioPlayer = {
 		samples:sampleList,
@@ -38,9 +40,13 @@ function generateAudioPlayer(sampleList, timeTable) {
 		currentSubBeat:0,
 		loop:null,
 		playing:false,
-		subBeatLength: (60 * 1000) / (document.getElementById("bpm-input").value * 8),
+		subBeatLength: null,
 		updateSubBeatLength: function(audioPlayer) {
-			audioPlayer.subBeatLength = (60 * 1000) / (document.getElementById("bpm-input").value * 8);
+			var bpm = document.getElementById("bpm-input").value;
+			var denominator = document.getElementById("denominator-input").value;
+			/*	bdr = beats denominator represents */
+			/*	(1 min / x beats) * (60 sec / 1 min) * (1000 ms / 1 sec) * (4 beats / y bdr) * (1 bdr / 4 originalsubdivisions) */
+			audioPlayer.subBeatLength = (60 * 1000 * 4) / (bpm * denominator * 4);
 		},
 		beginLoop: function(audioPlayer) {
 			if(!audioPlayer.playing) {
@@ -50,31 +56,31 @@ function generateAudioPlayer(sampleList, timeTable) {
 			}
 		},
 		loopFunction: function(audioPlayer) {
+			i += 1;
+			console.log(i);
 			audioPlayer.updateSubBeatLength(audioPlayer);
-			setTimeout(function() {
-				if(audioPlayer.playing) {
-					audioPlayer.updateSubBeatLength(audioPlayer);
+			if(audioPlayer.playing) {
+				audioPlayer.updateSubBeatLength(audioPlayer);
 
-					var i;		
-					for(i = 0; i < audioPlayer.table.length; i++) {
-						if(audioPlayer.table[i][audioPlayer.currentSubBeat]) {
-							audioPlayer.samples[i].currentTime = 0;
-							audioPlayer.samples[i].play();
-						}
-						var id = i + "-" + audioPlayer.currentSubBeat;
-						var last_id = i + "-" + ((audioPlayer.currentSubBeat + 15) % 16);
-						document.getElementById(id).classList.add("playing");
-
-						var last_box = document.getElementById(last_id);
-						if(last_box.classList.contains("playing")) {
-							last_box.classList.remove("playing");
-						}
+				var i;		
+				for(i = 0; i < audioPlayer.table.length; i++) {
+					if(audioPlayer.table[i][audioPlayer.currentSubBeat]) {
+						audioPlayer.samples[i].currentTime = 0;
+						audioPlayer.samples[i].play();
 					}
-					audioPlayer.currentSubBeat = (audioPlayer.currentSubBeat + 1) % audioPlayer.table[0].length;
+					var id = i + "-" + audioPlayer.currentSubBeat;
+					var last_id = i + "-" + ((audioPlayer.currentSubBeat + 15) % 16);
+					document.getElementById(id).classList.add("playing");
 
-					setTimeout(function() {audioPlayer.loopFunction(audioPlayer)}, audioPlayer.subBeatLength);
+					var last_box = document.getElementById(last_id);
+					if(last_box.classList.contains("playing")) {
+						last_box.classList.remove("playing");
+					}
 				}
-			}, audioPlayer.subBeatLength);
+				audioPlayer.currentSubBeat = (audioPlayer.currentSubBeat + 1) % audioPlayer.table[0].length;
+
+				setTimeout(function() {audioPlayer.loopFunction(audioPlayer)}, audioPlayer.subBeatLength);
+			}
 		},
 		pause: function(audioPlayer) {
 			audioPlayer.playing = false
@@ -177,3 +183,4 @@ function incI() {
 
 var timer = setTimeout(incI, i)
 */
+
