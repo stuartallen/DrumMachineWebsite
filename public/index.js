@@ -22,13 +22,14 @@ function audioSetUp() {
 }
 
 function updateTimeSignature(audioPlayer) {
+	
 	if(audioPlayer.playing) {
 		audioPlayer.stop(audioPlayer);
 	}
-	audioPlayer.timeTable = []
+	audioPlayer.currentSubBeat = 0;
+	audioPlayer.table = []
 
 	var childList = document.getElementsByClassName("row");
-	console.log(childList);
 	while(childList[1]) {
 		childList[1].remove();
 	}
@@ -37,9 +38,10 @@ function updateTimeSignature(audioPlayer) {
 	var subdivisions = denominatorToSubdivisions(document.getElementById("denominator-input").value);
 	var i = 0;
 	for(sample of audioSampleNames) {
-		makeRow(audioPlayer.timeTable, numerator * subdivisions, sample, i);
+		makeRow(audioPlayer.table, numerator * subdivisions, sample, i);
 		i++;
 	}
+	console.log(audioPlayer);
 }
 
 function denominatorToSubdivisions(denominator) {
@@ -73,7 +75,6 @@ function generateAudioPlayer(sampleList, timeTable) {
 		playing:false,
 		subBeatLength: null,
 		updateSubBeatLength: function(audioPlayer) {
-			console.log("updated");
 			var bpm = document.getElementById("bpm-input").value;
 			var denominator = document.getElementById("denominator-input").value;
 			/*	bdr = beats denominator represents */
@@ -97,7 +98,7 @@ function generateAudioPlayer(sampleList, timeTable) {
 						audioPlayer.samples[i].play();
 					}
 					var id = i + "-" + audioPlayer.currentSubBeat;
-					var last_id = i + "-" + ((audioPlayer.currentSubBeat + audioPlayer.timeTable.length - 1) % audioPlayer.timeTable.length);
+					var last_id = i + "-" + ((this.currentSubBeat + audioPlayer.table[0].length - 1) % audioPlayer.table[0].length);
 					document.getElementById(id).classList.add("playing");
 
 					var last_box = document.getElementById(last_id);
@@ -119,7 +120,7 @@ function generateAudioPlayer(sampleList, timeTable) {
 			var i;
 			for(i = 0; i < audioPlayer.table.length; i++) {
 				/*	The -1 is because the sub beat is incremented as the last thing in the loop	*/
-				var id = i + "-" + ((this.currentSubBeat + audioPlayer.timeTable.length - 1) % audioPlayer.timeTable.length);
+				var id = i + "-" + ((this.currentSubBeat + audioPlayer.table[0].length - 1) % audioPlayer.table[0].length);
 				var box = document.getElementById(id);
 				if(box.classList.contains("playing")) {
 					box.classList.remove("playing");
