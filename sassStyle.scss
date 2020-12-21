@@ -8,8 +8,9 @@ $color-primary-1: aquamarine;
 $color-primary-2: white;
 $color-primary-3: rgb(123, 202, 123);
 
-$color-secondary-1: grey;
+$color-secondary-1: rgb(194, 194, 194);
 $color-secondary-2: red;
+$color-secondary-3: rgb(170, 46, 170);
 
 $box-size: 15px;
 $box-margin: 2px;
@@ -87,6 +88,32 @@ body {
 	padding: $general-padding;
 }
 
+#highlighter-container {
+	align-self: flex-end;
+	width: 70%;
+	background-color: $color-secondary-1;
+	border-radius: $general-radius;
+	padding: $general-padding;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.highlight {
+	background-color: $color-secondary-3;
+	width: $box-size + $box-margin;
+	height: $box-size;
+	margin: $box-margin;
+	border-radius: $general-radius;
+	border: 2px solid;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 .row {
 	display: flex;
 	justify-content: space-between;
@@ -94,7 +121,6 @@ body {
 	align-items: center;
 	width: 100%;
 	margin: $box-margin;
-	
 }
 
 .box {

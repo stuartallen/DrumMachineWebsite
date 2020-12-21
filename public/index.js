@@ -13,6 +13,7 @@ function audioSetUp() {
 	}
 	var sampleList = generateAudioSamples(audioSampleNames);
 	var audioPlayer = generateAudioPlayer(sampleList, timeTable);
+	updateTimeSignature(audioPlayer);
 	document.getElementById("play-button").addEventListener("click", function() { audioPlayer.beginLoop(audioPlayer) });
 	document.getElementById("pause-button").addEventListener("click", function() { audioPlayer.pause(audioPlayer) });
 	document.getElementById("stop-button").addEventListener("click", function() { audioPlayer.stop(audioPlayer) });
@@ -22,7 +23,10 @@ function audioSetUp() {
 }
 
 function updateTimeSignature(audioPlayer) {
-	
+	if(document.getElementById("highlighter-container")) {
+		document.getElementById("highlighter-container").remove();
+	}
+	addHighlighter(document.getElementById("numerator-input").value, document.getElementById("denominator-input").value);
 	if(audioPlayer.playing) {
 		audioPlayer.stop(audioPlayer);
 	}
@@ -41,7 +45,6 @@ function updateTimeSignature(audioPlayer) {
 		makeRow(audioPlayer.table, numerator * subdivisions, sample, i);
 		i++;
 	}
-	console.log(audioPlayer);
 }
 
 function denominatorToSubdivisions(denominator) {
@@ -130,6 +133,36 @@ function generateAudioPlayer(sampleList, timeTable) {
 		}
 	};
 	return audioPlayer;
+}
+
+function addHighlighter(numerator, denominator) {
+	var highlighterContainer = document.createElement("div");
+	highlighterContainer.setAttribute("id","highlighter-container");
+
+	var beatContainer = document.getElementById("beat-container");
+	beatContainer.insertBefore(highlighterContainer, beatContainer.children[1]);
+
+	var numBoxes = numerator * denominatorToSubdivisions(denominator);
+	console.log(numBoxes);
+
+	if(numerator % 6 == 0) {
+		console.log("in 3")
+		var numHighlights = numBoxes / 6;
+	} else {
+		var numHighlights = numBoxes / 4;
+	}
+	console.log(numHighlights);
+	var i;
+	for(i = 0; i < numHighlights; i++) {
+		var highlight = document.createElement("div");
+		var width = 100 / numHighlights;
+		highlight.setAttribute("class","highlight");
+		highlight.textContent = i + 1;
+		highlight.style.width = width + "%";
+		
+		highlighterContainer.appendChild(highlight);
+	}
+	
 }
 
 function makeRow(timeTable, numBoxes, soundName, rowNumber) {

@@ -29,7 +29,7 @@ body {
 
 #controls {
   width: 100%;
-  background-color: grey;
+  background-color: #c2c2c2;
   border-radius: 15px;
   padding: 20px;
 }
@@ -60,9 +60,33 @@ body {
   flex-direction: row;
   align-items: center;
   width: 70%;
-  background-color: grey;
+  background-color: #c2c2c2;
   border-radius: 15px;
   padding: 20px;
+}
+
+#highlighter-container {
+  align-self: flex-end;
+  width: 70%;
+  background-color: #c2c2c2;
+  border-radius: 15px;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.highlight {
+  background-color: #aa2eaa;
+  width: 17px;
+  height: 15px;
+  margin: 2px;
+  border-radius: 15px;
+  border: 2px solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .row {
