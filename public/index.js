@@ -145,12 +145,13 @@ function addHighlighter(numerator, denominator) {
 	var numBoxes = numerator * denominatorToSubdivisions(denominator);
 	console.log(numBoxes);
 
-	if(numerator % 6 == 0) {
-		console.log("in 3")
-		var numHighlights = numBoxes / 6;
+	var numHighlights;
+	if(numerator % 3 == 0 && numerator != 3) {
+		numHighlights = numerator / 3;
 	} else {
-		var numHighlights = numBoxes / 4;
+		numHighlights = numerator;
 	}
+	
 	console.log(numHighlights);
 	var i;
 	for(i = 0; i < numHighlights; i++) {
