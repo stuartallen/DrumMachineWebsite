@@ -4,6 +4,49 @@ var audioSampleNames = [
 	"closed_hh.wav"
 ];
 
+function betterAudioSetUp() {
+	for(sample of audioSampleNames) {
+		var newSoundLabel = document.createElement("div");
+		newSoundLabel.textContent = sample;
+		document.getElementById("sound-labels-container").appendChild(newSoundLabel);
+	}
+	timeSigChange();
+}
+
+function timeSigChange() {
+	var timeTable = [];	
+	var i = 0;
+	var numBeats = createBeatDivs();
+
+	for(var i = 0; i < numBeats; i++) {
+		var newBeatDiv = document.createElement("div");
+		newBeatDiv.setAttribute("class","beat");
+		document.getElementById("beats-container").appendChild(newBeatDiv);
+	}
+}
+
+function createBeatDivs() {
+	var numerator = document.getElementById("numerator-input").value;
+	var denominator = document.getElementById("denominator-input").value;
+
+	var numHighlights;
+	if(numerator % 3 == 0 && numerator != 3) {
+		numHighlights = numerator / 3;
+	} else {
+		numHighlights = numerator;
+	}
+	return numHighlights;
+}
+
+function getNumberHighlights(numerator, denominator) {
+	var numHighlights;
+	if(numerator % 3 == 0 && numerator != 3) {
+		numHighlights = numerator / 3;
+	} else {
+		numHighlights = numerator;
+	}
+}
+
 function audioSetUp() {
 	var timeTable = [];	
 	var i = 0;
@@ -161,7 +204,7 @@ function addHighlighter(numerator, denominator) {
 	var highlighterContainer = document.createElement("div");
 	highlighterContainer.setAttribute("id","highlighter-container");
 
-	var beatContainer = document.getElementById("beat-container");
+	var beatContainer = document.getElementById("beat-machine-container");
 	beatContainer.insertBefore(highlighterContainer, beatContainer.children[1]);
 
 	var numBoxes = numerator * denominatorToSubdivisions(denominator);
@@ -212,7 +255,7 @@ function makeRow(timeTable, numBoxes, soundName, rowNumber) {
 
 	row.appendChild(boxes);
 
-	document.getElementById("beat-container").appendChild(row);
+	document.getElementById("beat-machine-container").appendChild(row);
 }
 
 function createBoxObject(timeTable, rowNumber, columnNumber) {
@@ -255,4 +298,5 @@ function boxClick(boxObject) {
 
 /*	Shit happens */
 
-audioSetUp();
+//audioSetUp();
+betterAudioSetUp();
