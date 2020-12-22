@@ -58,11 +58,15 @@ body {
 }
 
 .button {
+	background-color: $color-primary-2;
 	font-family: $font;
 	width: $button-size;
 	height: $button-size;
 	border-radius: 100%;
 	border: $controls-border;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 #controls input {

@@ -14,12 +14,32 @@ function audioSetUp() {
 	var sampleList = generateAudioSamples(audioSampleNames);
 	var audioPlayer = generateAudioPlayer(sampleList, timeTable);
 	updateTimeSignature(audioPlayer);
-	document.getElementById("play-button").addEventListener("click", function() { audioPlayer.beginLoop(audioPlayer) });
-	document.getElementById("pause-button").addEventListener("click", function() { audioPlayer.pause(audioPlayer) });
-	document.getElementById("stop-button").addEventListener("click", function() { audioPlayer.stop(audioPlayer) });
+	document.getElementById("play-button").addEventListener("click", function() { 
+		console.log("click play");
+		audioPlayer.beginLoop(audioPlayer);
+	 });
+	var pause_listener = document.getElementById("pause-button").addEventListener("click", function() { 
+		console.log("click pause");
+		audioPlayer.pause(audioPlayer) ;
+	});
+	document.getElementById("stop-button").addEventListener("click", function() { 
+		console.log("click stop");
+		audioPlayer.stop(audioPlayer) 
+	});
 	$("#numerator-input").change(function() { updateTimeSignature(audioPlayer) });
 	$("#denominator-input").change(function() { updateTimeSignature(audioPlayer) });
 	$("#bpm-input").change(function() { audioPlayer.updateSubBeatLength(audioPlayer) });
+	document.addEventListener("keypress", function() { spaceFunction(audioPlayer)});
+}
+
+function spaceFunction(audioPlayer) {
+	console.log("space pressed");
+	console.log(audioPlayer.playing);
+	if(audioPlayer.playing) {
+		audioPlayer.pause(audioPlayer);
+	} else {
+		audioPlayer.beginLoop(audioPlayer);
+	}
 }
 
 function updateTimeSignature(audioPlayer) {
@@ -81,12 +101,11 @@ function generateAudioPlayer(sampleList, timeTable) {
 			var bpm = document.getElementById("bpm-input").value;
 			var denominator = document.getElementById("denominator-input").value;
 			/*	bdr = beats denominator represents */
-			/*	(1 min / x beats) * (60 sec / 1 min) * (1000 ms / 1 sec) * (4 beats / y bdr) * (1 bdr / 4 originalsubdivisions) */
-			//audioPlayer.subBeatLength = (60 * 1000 * 4) / (bpm * denominator * 4);
 			/*	(1 min / x quarter notes) * (60 sec / 1 min) * (1000 ms / 1 sec) * (4 quarter notes / z bdr) * (1 bdr / subdivisions) = ms /subdivisions	*/
 			audioPlayer.subBeatLength = (60 * 1000 * 4) / (bpm * denominator * denominatorToSubdivisions(denominator));
 		},
 		beginLoop: function(audioPlayer) {
+			console.log("play");
 			if(!audioPlayer.playing) {
 				audioPlayer.playing = true;
 				audioPlayer.updateSubBeatLength(audioPlayer);
@@ -117,6 +136,7 @@ function generateAudioPlayer(sampleList, timeTable) {
 			}
 		},
 		pause: function(audioPlayer) {
+			console.log("paused");
 			audioPlayer.playing = false
 			clearInterval(audioPlayer.loop)
 		},

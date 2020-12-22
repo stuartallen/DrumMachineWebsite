@@ -15,19 +15,22 @@
 	<div id="background">
 		<div id="beat-container">
 			<div id="controls" class="row">
-				<button id="play-button" class="button">
+				<!--These aren't button because buttons are reclicked on space and enter buttons-->
+				<div id="play-button" class="button">
 					<svg class="bi" width="32" height="32" fill="black">
 						<use href="bootstrap-icons.svg#play"/>
 					</svg>
-				</button>
-				<button id="pause-button" class="button">
+				</div>
+				<div id="pause-button" class="button">
 					<svg class="bi" width="32" height="32" fill="black">
 						<use href="bootstrap-icons.svg#pause"/>
-					</svg></button>
-				<button id="stop-button" class="button">
+					</svg>
+				</div>
+				<div id="stop-button" class="button">
 					<svg class="bi" width="32" height="32" fill="black">
 						<use href="bootstrap-icons.svg#stop"/>
-					</svg></button>
+					</svg>
+				</div>
 				<input id="bpm-input" type="number" value="100">
 				<input id="numerator-input" type="number" value="4">
 				<select id="denominator-input">
