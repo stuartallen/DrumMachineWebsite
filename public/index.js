@@ -82,7 +82,9 @@ function generateAudioPlayer(sampleList, timeTable) {
 			var denominator = document.getElementById("denominator-input").value;
 			/*	bdr = beats denominator represents */
 			/*	(1 min / x beats) * (60 sec / 1 min) * (1000 ms / 1 sec) * (4 beats / y bdr) * (1 bdr / 4 originalsubdivisions) */
-			audioPlayer.subBeatLength = (60 * 1000 * 4) / (bpm * denominator * 4);
+			//audioPlayer.subBeatLength = (60 * 1000 * 4) / (bpm * denominator * 4);
+			/*	(1 min / x quarter notes) * (60 sec / 1 min) * (1000 ms / 1 sec) * (4 quarter notes / z bdr) * (1 bdr / subdivisions) = ms /subdivisions	*/
+			audioPlayer.subBeatLength = (60 * 1000 * 4) / (bpm * denominator * denominatorToSubdivisions(denominator));
 		},
 		beginLoop: function(audioPlayer) {
 			if(!audioPlayer.playing) {
@@ -234,16 +236,3 @@ function boxClick(boxObject) {
 /*	Shit happens */
 
 audioSetUp();
-
-/*
-var i = 100;
-
-function incI() {
-	console.log(i);
-	i += 100;
-	setTimeout(incI, i);
-}
-
-var timer = setTimeout(incI, i)
-*/
-
