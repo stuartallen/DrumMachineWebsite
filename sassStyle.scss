@@ -18,6 +18,8 @@ $box-margin: 2px;
 $controls-border: 1px solid;
 $button-size: 50px;
 
+$row-margin: 10px;
+
 body {
 	font-family: $font;
 }
@@ -60,17 +62,26 @@ body {
 
 .beat {
 	background-color: $color-primary-2;
-	height: 100%;
-}
-
-#sound-labels-container {
-	background-color: $color-primary-2;
-	height: fit-content;
+	height: 90%;
 	width: fit-content;
+	padding: $general-padding;
+	border-radius: $general-radius;
 	display: flex;
 	flex-direction: column;
-	border-radius: $general-radius;
+	justify-content: flex-start;
+}
+
+.row {
+	background-color: $color-primary-1;
+	height: fit-content;
+	width: 70%;
+	display: flex;
+	align-items: center;
+
 	padding: $general-padding;
+	border-radius: $general-radius;
+	
+	margin-bottom: $row-margin;
 }
 
 #controls {
@@ -80,6 +91,12 @@ body {
 	border-radius: $general-radius;
 	
 	padding: $general-padding;
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+	align-items: center;
+	width: 100%;
+	margin: $box-margin;
 }
 
 .button {
@@ -143,6 +160,7 @@ body {
 	align-items: center;
 }
 
+/*
 .row {
 	display: flex;
 	justify-content: space-between;
@@ -151,6 +169,7 @@ body {
 	width: 100%;
 	margin: $box-margin;
 }
+*/
 
 .box {
 	width: $box-size;

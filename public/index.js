@@ -8,9 +8,31 @@ function betterAudioSetUp() {
 	for(sample of audioSampleNames) {
 		var newSoundLabel = document.createElement("div");
 		newSoundLabel.textContent = sample;
+		newSoundLabel.setAttribute("class","row");
 		document.getElementById("sound-labels-container").appendChild(newSoundLabel);
 	}
-	timeSigChange();
+	var timeTable = timeSigChange();
+	console.log(timeTable);
+	var sampleList = generateAudioSamples(audioSampleNames);
+	var audioPlayer = generateAudioPlayer(sampleList, timeTable);
+
+	document.getElementById("play-button").addEventListener("click", function() { 
+		console.log("click play");
+		audioPlayer.beginLoop(audioPlayer);
+	 });
+	var pause_listener = document.getElementById("pause-button").addEventListener("click", function() { 
+		console.log("click pause");
+		audioPlayer.pause(audioPlayer) ;
+	});
+	document.getElementById("stop-button").addEventListener("click", function() { 
+		console.log("click stop");
+		audioPlayer.stop(audioPlayer) 
+	});
+	$("#numerator-input").change(function() { updateTimeSignature(audioPlayer) });
+	$("#denominator-input").change(function() { updateTimeSignature(audioPlayer) });
+	$("#bpm-input").change(function() { audioPlayer.updateSubBeatLength(audioPlayer) });
+	document.addEventListener("keypress", function() { spaceFunction(audioPlayer)});
+
 }
 
 function timeSigChange() {
@@ -18,11 +40,46 @@ function timeSigChange() {
 	var i = 0;
 	var numBeats = createBeatDivs();
 
+	var timeTable = [];
+	for(sample in audioSampleNames) {
+		timeTable.push([]);
+	}
+	var subdivisions = denominatorToSubdivisions(document.getElementById("denominator-input").value);
+	console.log(subdivisions);
 	for(var i = 0; i < numBeats; i++) {
 		var newBeatDiv = document.createElement("div");
 		newBeatDiv.setAttribute("class","beat");
+
+		for(var j = 0; j < audioSampleNames.length; j++) {
+			var newRow = document.createElement("div");
+			newRow.setAttribute("class","row");
+			newRow.setAttribute("id","row-"+i+"-"+j)
+
+			for(var k = 0; k < subdivisions; k++) {
+				var newBox = createBoxObject(timeTable,j, i * subdivisions + k);
+				newRow.appendChild(newBox.DOMElement);
+				timeTable[j].push(newBox.activated);
+			}
+
+			newBeatDiv.appendChild(newRow);
+		}
+
 		document.getElementById("beats-container").appendChild(newBeatDiv);
 	}
+
+	return timeTable;
+}
+
+function addBoxes() {
+	var innerTimeTable = [];
+	for(i = 0; i < numBoxes; i++) {
+		var newBox = createBoxObject(timeTable, rowNumber, i);
+		var id = rowNumber + "-" + i;
+		newBox.DOMElement.setAttribute("id", id);
+		boxes.appendChild(newBox.DOMElement);
+		innerTimeTable.push(newBox.activated);
+	}
+	timeTable.push(innerTimeTable);
 }
 
 function createBeatDivs() {
@@ -166,6 +223,7 @@ function generateAudioPlayer(sampleList, timeTable) {
 					}
 					var id = i + "-" + audioPlayer.currentSubBeat;
 					var last_id = i + "-" + ((this.currentSubBeat + audioPlayer.table[0].length - 1) % audioPlayer.table[0].length);
+					
 					document.getElementById(id).classList.add("playing");
 
 					var last_box = document.getElementById(last_id);
@@ -261,6 +319,7 @@ function makeRow(timeTable, numBoxes, soundName, rowNumber) {
 function createBoxObject(timeTable, rowNumber, columnNumber) {
 	var box = document.createElement("div");
 	box.setAttribute("class","box off");
+	box.setAttribute("id",rowNumber+"-"+columnNumber);
 
 	var boxObject = {
 		table:timeTable,
