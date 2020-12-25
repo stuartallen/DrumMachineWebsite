@@ -35,6 +35,14 @@ function betterAudioSetUp() {
 }
 
 function betterUpdateTimeSignature(audioPlayer) {
+	if(document.getElementById("numerator-input").value <= 0) {
+		document.getElementById("numerator-input").value = 1;
+	}
+	console.log(document.getElementById("bpm-input").value);
+	if(document.getElementById("bpm-input").value <= 0) {
+		console.log(document.getElementById("bpm-input").value);
+		document.getElementById("bpm-input").value = 1;
+	}
 	audioPlayer.stop(audioPlayer);
 	audioPlayer.table = timeSigChange(audioPlayer);
 }
@@ -207,6 +215,10 @@ function generateAudioPlayer(sampleList, timeTable) {
 		subBeatLength: null,
 		updateSubBeatLength: function(audioPlayer) {
 			var bpm = document.getElementById("bpm-input").value;
+			if(bpm <= 0) {
+				document.getElementById("bpm-input").value = 1;
+				bpm = 1;
+			}
 			var denominator = document.getElementById("denominator-input").value;
 			/*	bdr = beats denominator represents */
 			/*	(1 min / x quarter notes) * (60 sec / 1 min) * (1000 ms / 1 sec) * (4 quarter notes / z bdr) * (1 bdr / subdivisions) = ms /subdivisions	*/
@@ -233,8 +245,6 @@ function generateAudioPlayer(sampleList, timeTable) {
 					var last_id = i + "-" + ((this.currentSubBeat + audioPlayer.table[0].length - 1) % audioPlayer.table[0].length);
 					
 					document.getElementById(id).classList.add("playing");
-
-					console.log(last_id);
 					var last_box = document.getElementById(last_id);
 					if(last_box.classList.contains("playing")) {
 						last_box.classList.remove("playing");
