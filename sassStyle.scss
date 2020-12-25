@@ -45,7 +45,7 @@ body {
 	justify-content: flex-start;
 	align-items: center;
 	background-color: $color-primary-2;
-	width: 70%;
+	width: fit-content;
 	height: 70%;
 	padding: 3 * $general-padding;
 }
@@ -58,6 +58,7 @@ body {
 	padding: $general-padding;
 	display: flex;
 	flex-direction: row;
+	justify-content: space-between;
 }
 
 .beat {
@@ -191,5 +192,5 @@ body {
 }
 
 .playing {
-	border-color: $color-primary-1;
+	border-color: $color-secondary-1;
 }

@@ -28,14 +28,25 @@ function betterAudioSetUp() {
 		console.log("click stop");
 		audioPlayer.stop(audioPlayer) 
 	});
-	$("#numerator-input").change(function() { updateTimeSignature(audioPlayer) });
-	$("#denominator-input").change(function() { updateTimeSignature(audioPlayer) });
+	$("#numerator-input").change(function() { betterUpdateTimeSignature(audioPlayer) });
+	$("#denominator-input").change(function() { betterUpdateTimeSignature(audioPlayer) });
 	$("#bpm-input").change(function() { audioPlayer.updateSubBeatLength(audioPlayer) });
 	document.addEventListener("keypress", function() { spaceFunction(audioPlayer)});
 
 }
 
-function timeSigChange() {
+function betterUpdateTimeSignature(audioPlayer) {
+	audioPlayer.stop(audioPlayer);
+	audioPlayer.table = timeSigChange(audioPlayer);
+}
+
+function timeSigChange(audioPlayer) {
+	var curbeats = document.getElementById("beats-container").children;
+	console.log(curbeats.length);
+	for(var i = curbeats.length - 1; i > 0; i--) {
+		curbeats[i].remove();
+	}
+
 	var timeTable = [];	
 	var i = 0;
 	var numBeats = createBeatDivs();
@@ -226,6 +237,7 @@ function generateAudioPlayer(sampleList, timeTable) {
 					
 					document.getElementById(id).classList.add("playing");
 
+					console.log(last_id);
 					var last_box = document.getElementById(last_id);
 					if(last_box.classList.contains("playing")) {
 						last_box.classList.remove("playing");
