@@ -8,11 +8,10 @@ function betterAudioSetUp() {
 	for(sample of audioSampleNames) {
 		var newSoundLabel = document.createElement("div");
 		newSoundLabel.textContent = sample;
-		newSoundLabel.setAttribute("class","row");
+		newSoundLabel.setAttribute("class","row pads");
 		document.getElementById("sound-labels-container").appendChild(newSoundLabel);
 	}
 	var timeTable = timeSigChange();
-	console.log(timeTable);
 	var sampleList = generateAudioSamples(audioSampleNames);
 	var audioPlayer = generateAudioPlayer(sampleList, timeTable);
 
@@ -42,7 +41,6 @@ function betterUpdateTimeSignature(audioPlayer) {
 
 function timeSigChange(audioPlayer) {
 	var curbeats = document.getElementById("beats-container").children;
-	console.log(curbeats.length);
 	for(var i = curbeats.length - 1; i > 0; i--) {
 		curbeats[i].remove();
 	}
@@ -56,14 +54,13 @@ function timeSigChange(audioPlayer) {
 		timeTable.push([]);
 	}
 	var subdivisions = denominatorToSubdivisions(document.getElementById("denominator-input").value);
-	console.log(subdivisions);
 	for(var i = 0; i < numBeats; i++) {
 		var newBeatDiv = document.createElement("div");
-		newBeatDiv.setAttribute("class","beat");
+		newBeatDiv.setAttribute("class","beat pads");
 
 		for(var j = 0; j < audioSampleNames.length; j++) {
 			var newRow = document.createElement("div");
-			newRow.setAttribute("class","row");
+			newRow.setAttribute("class","row pads");
 			newRow.setAttribute("id","row-"+i+"-"+j)
 
 			for(var k = 0; k < subdivisions; k++) {
@@ -303,7 +300,7 @@ function addHighlighter(numerator, denominator) {
 
 function makeRow(timeTable, numBoxes, soundName, rowNumber) {
 	var row = document.createElement("div");
-	row.setAttribute("class","row")
+	row.setAttribute("class","row pads")
 
 	var label = document.createElement("div");
 	label.textContent = soundName + ":";
@@ -369,5 +366,28 @@ function boxClick(boxObject) {
 
 /*	Shit happens */
 
+function updatePadding() {
+	// The constant is from it looking like my computer screen
+	// P2 = P1*W2*H2/(H1*H2)
+	var newPadding = (20 / (1620 * 1080)) * screen.width * screen.height;
+	var nodesWithPadding = document.getElementsByClassName("pads");
+	console.log(newPadding);
+	console.log(nodesWithPadding);
+
+	console.log(document.getElementById("beat-machine-container"));
+	console.log(document.getElementById("beat-machine-container").style.padding);
+	
+	console.log(window.getComputedStyle(document.getElementById("beat-machine-container"), null).getPropertyValue('padding'));
+
+	for(node of nodesWithPadding) {
+		window.getComputedStyle(document.getElementById("beat-machine-container"), null).setProperty('padding',newPadding + "px");
+	}
+
+	document.getElementById("beat-machine-container").style.padding = 3 * newPadding;
+}
+
 //audioSetUp();
+console.log(screen.width);
+console.log(screen.height)
+//updatePadding();
 betterAudioSetUp();

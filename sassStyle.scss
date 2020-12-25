@@ -22,6 +22,25 @@ $row-margin: 10px;
 
 body {
 	font-family: $font;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.pads {
+	padding: 20px;
+}
+#beat-machine-container {
+	padding: 60px;
+}
+@media (max-width: 1000px) {
+	.pads {
+		padding: 5px;
+	}
+
+	#beat-machine-container {
+		padding: 30px;
+	}
 }
 
 #background {
@@ -46,8 +65,7 @@ body {
 	align-items: center;
 	background-color: $color-primary-2;
 	width: fit-content;
-	height: 70%;
-	padding: 3 * $general-padding;
+	height: fit-content;
 }
 
 #beats-container {
@@ -55,7 +73,6 @@ body {
 	width: 100%;
 	height: 90%;
 	border-radius: $general-radius;
-	padding: $general-padding;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -63,23 +80,24 @@ body {
 
 .beat {
 	background-color: $color-primary-2;
-	height: 90%;
+	height: 100%;
 	width: fit-content;
-	padding: $general-padding;
+	height: fit-content;
 	border-radius: $general-radius;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
+	align-items: center;
 }
 
 .row {
 	background-color: $color-primary-1;
-	height: fit-content;
-	width: 70%;
+	height: $box-size;
+	width: fit-content;
 	display: flex;
+	justify-content: center;
 	align-items: center;
 
-	padding: $general-padding;
 	border-radius: $general-radius;
 	
 	margin-bottom: $row-margin;
@@ -91,7 +109,6 @@ body {
 	background-color: $color-secondary-1;
 	border-radius: $general-radius;
 	
-	padding: $general-padding;
 	display: flex;
 	justify-content: space-between;
 	flex-direction: row;
@@ -132,7 +149,6 @@ body {
 	width: 70%;
 	background-color: $color-secondary-1;
 	border-radius: $general-radius;
-	padding: $general-padding;
 }
 
 #highlighter-container {
@@ -140,7 +156,6 @@ body {
 	width: 70%;
 	background-color: $color-secondary-1;
 	border-radius: $general-radius;
-	padding: $general-padding;
 
 	display: flex;
 	flex-direction: row;
@@ -160,17 +175,6 @@ body {
 	justify-content: center;
 	align-items: center;
 }
-
-/*
-.row {
-	display: flex;
-	justify-content: space-between;
-	flex-direction: row;
-	align-items: center;
-	width: 100%;
-	margin: $box-margin;
-}
-*/
 
 .box {
 	width: $box-size;
