@@ -61,7 +61,15 @@ function timeSigChange(audioPlayer) {
 	for(sample in audioSampleNames) {
 		timeTable.push([]);
 	}
-	var subdivisions = denominatorToSubdivisions(document.getElementById("denominator-input").value);
+	if(document.getElementById("numerator-input").value == 3 || document.getElementById("numerator-input").value % 3 != 0) {
+		var subdivisions = denominatorToSubdivisions(document.getElementById("denominator-input").value);
+	} else {
+		if(document.getElementById("denominator-input").value <= 4) {
+			var subdivisions = 6;
+		} else {
+			var subdivisions = 3;
+		}
+	}
 	for(var i = 0; i < numBeats; i++) {
 		var newBeatDiv = document.createElement("div");
 		newBeatDiv.setAttribute("class","beat pads");
