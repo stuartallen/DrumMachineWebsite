@@ -3,9 +3,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: scroll;
-  width: fit-content;
-  height: fit-content;
 }
 
 .pads {
@@ -14,6 +11,7 @@ body {
 
 #beat-machine-container {
   padding: 60px;
+  max-width: 1200px;
 }
 
 @media (max-width: 1000px) {
@@ -23,6 +21,7 @@ body {
 
   #beat-machine-container {
     padding: 30px;
+    max-width: 500px;
   }
 }
 #background {
@@ -47,6 +46,7 @@ body {
   background-color: white;
   width: fit-content;
   height: fit-content;
+  flex-shrink: 1;
 }
 
 #beats-container {
@@ -57,6 +57,7 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  overflow: auto;
 }
 
 .beat {
@@ -69,6 +70,7 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  margin: 5px;
 }
 
 .row {

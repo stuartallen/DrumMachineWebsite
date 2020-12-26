@@ -32,6 +32,7 @@ body {
 }
 #beat-machine-container {
 	padding: 60px;
+	max-width: 1200px;
 }
 @media (max-width: 1000px) {
 	.pads {
@@ -40,6 +41,7 @@ body {
 
 	#beat-machine-container {
 		padding: 30px;
+		max-width: 500px;
 	}
 }
 
@@ -66,6 +68,7 @@ body {
 	background-color: $color-primary-2;
 	width: fit-content;
 	height: fit-content;
+	flex-shrink: 1;
 }
 
 #beats-container {
@@ -76,6 +79,7 @@ body {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
+	overflow: auto;
 }
 
 .beat {
@@ -88,6 +92,7 @@ body {
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: center;
+	margin: 5px;
 }
 
 .row {
