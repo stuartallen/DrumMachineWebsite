@@ -21,6 +21,8 @@ $button-size: 50px;
 $row-margin: 10px;
 
 body {
+	width: 100%;
+	height: 100%;
 	font-family: $font;
 	display: flex;
 	justify-content: center;
@@ -34,23 +36,39 @@ body {
 	padding: 60px;
 	max-width: 1200px;
 }
-@media (max-width: 1000px) {
+@media (max-width: 1200px) {
 	.pads {
 		padding: 5px;
 	}
 
 	#beat-machine-container {
 		padding: 30px;
-		max-width: 500px;
+		max-width: 400px;
 	}
 }
 
-#background {
-	position: absolute;
+#rotate-device {
+	position: fixed;
 	left: 0;
-	right: 0;
 	top: 0;
-	bottom: 0;
+	width: 100%;
+	height: 100%;
+	background-color: $background;
+	z-index: 1;
+	font-size: 25px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center; 
+	padding: 0;
+}
+
+#background {
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
 	z-index: -1;
 	background-color: $background;
 	
@@ -80,6 +98,28 @@ body {
 	flex-direction: row;
 	justify-content: space-between;
 	overflow: auto;
+}
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+::-webkit-scrollbar:vertical {
+    width: 12px;
+}
+
+::-webkit-scrollbar:horizontal {
+    height: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, .5);
+    border-radius: 10px;
+    border: 2px solid #ffffff;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;  
+    background-color: #ffffff; 
 }
 
 .beat {

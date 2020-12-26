@@ -412,4 +412,21 @@ function updatePadding() {
 console.log(screen.width);
 console.log(screen.height)
 //updatePadding();
+
+function detectLandscapeMode() {
+	if(screen.height > screen.width) {
+		if(!document.getElementById("rotate-device")) {
+			var rotateNotification = document.createElement("div")
+			rotateNotification.setAttribute("id","rotate-device");
+			rotateNotification.textContent = "Please rotate your device to landscape mode";
+			document.body.appendChild(rotateNotification);
+		}
+	} else {
+		if(document.getElementById("rotate-device")) {
+			document.getElementById("rotate-device").remove();
+		}
+	}
+}
+
+setInterval(detectLandscapeMode,100);
 betterAudioSetUp();
