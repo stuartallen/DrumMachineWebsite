@@ -3,6 +3,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: scroll;
+  width: fit-content;
+  height: fit-content;
 }
 
 .pads {

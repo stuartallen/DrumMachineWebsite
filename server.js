@@ -5,7 +5,7 @@ var exphbs = require("express-handlebars");
 var app = express();
 //app.engine("handlebars", exphbs( {defaultLayout: none} ));
 app.set("view engine", "handlebars");
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 8000;
 
 const { mainModule } = require('process');
 const { NONAME } = require('dns');

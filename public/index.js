@@ -30,7 +30,11 @@ function betterAudioSetUp() {
 	$("#numerator-input").change(function() { betterUpdateTimeSignature(audioPlayer) });
 	$("#denominator-input").change(function() { betterUpdateTimeSignature(audioPlayer) });
 	$("#bpm-input").change(function() { audioPlayer.updateSubBeatLength(audioPlayer) });
-	document.addEventListener("keypress", function() { spaceFunction(audioPlayer)});
+	document.addEventListener("keypress", function(e) { 
+		if(e.code == "Space") {
+			spaceFunction(audioPlayer);
+		}
+	});
 
 }
 
