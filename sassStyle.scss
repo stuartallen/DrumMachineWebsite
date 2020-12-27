@@ -72,10 +72,13 @@ body {
 	z-index: -1;
 	background-color: $background;
 	
+	padding: $general-padding;
 	display:  flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
+	
+	overflow: auto;
 }
 
 #beat-machine-container {
