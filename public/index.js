@@ -132,34 +132,6 @@ function getNumberHighlights(numerator, denominator) {
 	}
 }
 
-function audioSetUp() {
-	var timeTable = [];	
-	var i = 0;
-	for(sample of audioSampleNames) {
-		makeRow(timeTable, 16, sample, i);
-		i++;
-	}
-	var sampleList = generateAudioSamples(audioSampleNames);
-	var audioPlayer = generateAudioPlayer(sampleList, timeTable);
-	updateTimeSignature(audioPlayer);
-	document.getElementById("play-button").addEventListener("click", function() { 
-		console.log("click play");
-		audioPlayer.beginLoop(audioPlayer);
-	 });
-	var pause_listener = document.getElementById("pause-button").addEventListener("click", function() { 
-		console.log("click pause");
-		audioPlayer.pause(audioPlayer) ;
-	});
-	document.getElementById("stop-button").addEventListener("click", function() { 
-		console.log("click stop");
-		audioPlayer.stop(audioPlayer) 
-	});
-	$("#numerator-input").change(function() { updateTimeSignature(audioPlayer) });
-	$("#denominator-input").change(function() { updateTimeSignature(audioPlayer) });
-	$("#bpm-input").change(function() { audioPlayer.updateSubBeatLength(audioPlayer) });
-	document.addEventListener("keypress", function() { spaceFunction(audioPlayer)});
-}
-
 function spaceFunction(audioPlayer) {
 	console.log("space pressed");
 	console.log(audioPlayer.playing);
@@ -167,31 +139,6 @@ function spaceFunction(audioPlayer) {
 		audioPlayer.pause(audioPlayer);
 	} else {
 		audioPlayer.beginLoop(audioPlayer);
-	}
-}
-
-function updateTimeSignature(audioPlayer) {
-	if(document.getElementById("highlighter-container")) {
-		document.getElementById("highlighter-container").remove();
-	}
-	addHighlighter(document.getElementById("numerator-input").value, document.getElementById("denominator-input").value);
-	if(audioPlayer.playing) {
-		audioPlayer.stop(audioPlayer);
-	}
-	audioPlayer.currentSubBeat = 0;
-	audioPlayer.table = []
-
-	var childList = document.getElementsByClassName("row");
-	while(childList[1]) {
-		childList[1].remove();
-	}
-
-	var numerator = document.getElementById("numerator-input").value;
-	var subdivisions = denominatorToSubdivisions(document.getElementById("denominator-input").value);
-	var i = 0;
-	for(sample of audioSampleNames) {
-		makeRow(audioPlayer.table, numerator * subdivisions, sample, i);
-		i++;
 	}
 }
 
@@ -287,37 +234,6 @@ function generateAudioPlayer(sampleList, timeTable) {
 		}
 	};
 	return audioPlayer;
-}
-
-function addHighlighter(numerator, denominator) {
-	var highlighterContainer = document.createElement("div");
-	highlighterContainer.setAttribute("id","highlighter-container");
-
-	var beatContainer = document.getElementById("beat-machine-container");
-	beatContainer.insertBefore(highlighterContainer, beatContainer.children[1]);
-
-	var numBoxes = numerator * denominatorToSubdivisions(denominator);
-	console.log(numBoxes);
-
-	var numHighlights;
-	if(numerator % 3 == 0 && numerator != 3) {
-		numHighlights = numerator / 3;
-	} else {
-		numHighlights = numerator;
-	}
-	
-	console.log(numHighlights);
-	var i;
-	for(i = 0; i < numHighlights; i++) {
-		var highlight = document.createElement("div");
-		var width = 100 / numHighlights;
-		highlight.setAttribute("class","highlight");
-		highlight.textContent = i + 1;
-		highlight.style.width = width + "%";
-		
-		highlighterContainer.appendChild(highlight);
-	}
-	
 }
 
 function makeRow(timeTable, numBoxes, soundName, rowNumber) {
